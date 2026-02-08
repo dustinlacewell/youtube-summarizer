@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Summarizer",
+  "version": "1.0.0",
+  "description": "Add a Summarize button to YouTube transcripts. Get AI-powered video summaries using Claude AI.",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://www.youtube.com/*",
+    "https://api.anthropic.com/*"
+  ],
+  "background": {
+    "service_worker": "src/background/service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": [
+        "src/lib/marked.min.js",
+        "src/utils/error-handler.js",
+        "src/api/youtube-transcript.js",
+        "src/ui/modal.js",
+        "src/ui/button.js",
+        "src/content/youtube-detector.js",
+        "src/content/content.js"
+      ],
+      "css": [
+        "src/content/content.css",
+        "src/ui/modal.css",
+        "src/ui/button.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "options_page": "src/options/options.html",
+  "action": {
+    "default_title": "YouTube Summarizer",
+    "default_popup": "src/popup/popup.html"
+  }
+}

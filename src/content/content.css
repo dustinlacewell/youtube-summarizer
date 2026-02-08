@@ -1,0 +1,11 @@
+/* Global content script styles */
+
+/* Ensure modal is above all YouTube elements */
+.yt-summary-modal {
+  z-index: 10000 !important;
+}
+
+/* Prevent body scroll when modal is open */
+body.yt-summary-modal-open {
+  overflow: hidden;
+}

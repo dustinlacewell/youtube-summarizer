@@ -1,0 +1,95 @@
+/* Summarize button styles */
+
+.yt-summarize-btn-wrapper {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.yt-summarize-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  background-color: #065fd4;
+  border: none;
+  border-radius: 8px;
+  font-family: "Roboto", "Arial", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  height: 40px;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.yt-summarize-btn:hover {
+  background-color: #0556c4;
+}
+
+.yt-summarize-btn:active {
+  background-color: #044fa0;
+}
+
+.yt-summarize-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.yt-summarize-btn-content,
+.yt-summarize-spinner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.yt-summarize-icon,
+.spinner {
+  flex-shrink: 0;
+}
+
+.yt-summarize-text {
+  white-space: nowrap;
+}
+
+/* Spinner animation */
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Dark theme support */
+html[dark] .yt-summarize-btn,
+[dark] .yt-summarize-btn,
+.yt-spec-button-shape-next--dark .yt-summarize-btn {
+  background-color: #3ea6ff;
+  color: #0f0f0f;
+}
+
+html[dark] .yt-summarize-btn:hover,
+[dark] .yt-summarize-btn:hover,
+.yt-spec-button-shape-next--dark .yt-summarize-btn:hover {
+  background-color: #65b8ff;
+}
+
+html[dark] .yt-summarize-btn:active,
+[dark] .yt-summarize-btn:active,
+.yt-spec-button-shape-next--dark .yt-summarize-btn:active {
+  background-color: #4ba3f5;
+}
+
+/* Loading state */
+.yt-summarize-btn.loading {
+  pointer-events: none;
+}

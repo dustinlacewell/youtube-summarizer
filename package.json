@@ -1,0 +1,33 @@
+{
+  "name": "youtube-summarizer",
+  "version": "1.0.0",
+  "description": "Chrome extension that adds a Summarize button to YouTube transcripts, powered by Claude AI",
+  "keywords": [
+    "youtube",
+    "summarizer",
+    "chrome-extension",
+    "claude-ai",
+    "transcript",
+    "ai",
+    "summary"
+  ],
+  "scripts": {
+    "lint": "eslint src/**/*.js",
+    "format": "prettier --write src/**/*.{js,css,html}"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/youtube-summarizer"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/youtube-summarizer/issues"
+  },
+  "homepage": "https://github.com/yourusername/youtube-summarizer#readme",
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0"
+  },
+  "author": "YouTube Summarizer Contributors",
+  "license": "MIT",
+  "private": false
+}
