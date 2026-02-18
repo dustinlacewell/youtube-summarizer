@@ -7,6 +7,7 @@ A Chrome extension that summarizes YouTube videos using Claude AI.
 - Adds a "Summarize" button directly to YouTube's transcript panel
 - Works with any video that has transcripts/captions
 - Markdown formatted summaries
+- Converse with the AI about the video
 
 ## Installation
 
