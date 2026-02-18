@@ -6,6 +6,8 @@ let currentVideoId = null;
 let currentVideoTitle = null;
 let summaryModal = null;
 let summarizeButton = null;
+const summaryCache = new Map(); // videoId -> summary text
+const transcriptCache = new Map(); // videoId -> transcript text
 
 // Initialize
 function init() {
@@ -162,6 +164,12 @@ async function handleSummarize() {
     throw new Error('No video detected');
   }
 
+  // If we already have a cached summary for this video, just reopen the modal
+  if (summaryCache.has(currentVideoId)) {
+    summaryModal.show(summaryCache.get(currentVideoId), currentVideoTitle, transcriptCache.get(currentVideoId));
+    return;
+  }
+
   // Set button to loading state
   if (summarizeButton) {
     summarizeButton.setLoading(true);
@@ -183,8 +191,12 @@ async function handleSummarize() {
     });
 
     if (result.success && result.summary) {
-      // Show summary in modal
-      summaryModal.show(result.summary, currentVideoTitle);
+      // Cache the summary and transcript for this video
+      summaryCache.set(currentVideoId, result.summary);
+      transcriptCache.set(currentVideoId, transcript);
+
+      // Show summary in modal (with transcript for chat feature)
+      summaryModal.show(result.summary, currentVideoTitle, transcript);
 
       // Reset button state
       if (summarizeButton) {

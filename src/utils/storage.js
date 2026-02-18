@@ -3,6 +3,7 @@
 const StorageKeys = {
   CLAUDE_API_KEY: 'claudeApiKey',
   CLAUDE_MODEL: 'claudeModel',
+  CHAT_PERSONALITY: 'chatPersonality',
   SETTINGS: 'settings'
 };
 
@@ -70,6 +71,24 @@ async function getModel() {
   return result[StorageKeys.CLAUDE_MODEL] || 'claude-opus-4-6';
 }
 
+/**
+ * Save chat personality prompt to Chrome sync storage
+ * @param {string} personality - The personality prompt text (empty string = use default)
+ * @returns {Promise<void>}
+ */
+async function savePersonality(personality) {
+  return chrome.storage.sync.set({ [StorageKeys.CHAT_PERSONALITY]: personality });
+}
+
+/**
+ * Get chat personality prompt from Chrome sync storage
+ * @returns {Promise<string|null>} The personality text or null if not customized
+ */
+async function getPersonality() {
+  const result = await chrome.storage.sync.get(StorageKeys.CHAT_PERSONALITY);
+  return result[StorageKeys.CHAT_PERSONALITY] || null;
+}
+
 // Export for use in other modules
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
@@ -80,6 +99,8 @@ if (typeof module !== 'undefined' && module.exports) {
     clearApiKey,
     saveModel,
     getModel,
+    savePersonality,
+    getPersonality,
     StorageKeys
   };
 }

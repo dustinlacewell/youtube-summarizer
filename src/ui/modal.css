@@ -39,7 +39,11 @@
   display: flex;
   flex-direction: column;
   transform: scale(0.9);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, max-width 0.3s ease;
+}
+
+.yt-summary-modal.chat-open .yt-summary-content {
+  max-width: 1100px;
 }
 
 .yt-summary-modal.visible .yt-summary-content {
@@ -260,6 +264,300 @@
   }
 }
 
+/* Two-panel layout */
+.yt-summary-panels {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.yt-summary-panel-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-right: none;
+}
+
+.yt-summary-modal.chat-open .yt-summary-panel-left {
+  border-right: 1px solid #e0e0e0;
+}
+
+.yt-summary-panel-left:only-child {
+  border-right: none;
+}
+
+.yt-summary-panel-right {
+  flex: 1;
+  display: none;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.yt-summary-modal.chat-open .yt-summary-panel-right {
+  display: flex;
+}
+
+/* Chat panel styles */
+.yt-summary-chat-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e0e0e0;
+  flex-shrink: 0;
+}
+
+.yt-summary-chat-header h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #606060;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.yt-summary-chat-header h3 svg {
+  color: #667eea;
+}
+
+/* Chat toggle button in footer */
+.yt-summary-chat-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: transparent;
+  color: #606060;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.yt-summary-chat-toggle:hover {
+  background: #f5f5f5;
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.yt-summary-modal.chat-open .yt-summary-chat-toggle {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: transparent;
+}
+
+.yt-summary-chat-toggle svg {
+  flex-shrink: 0;
+}
+
+/* Model selector dropdown */
+.yt-summary-chat-model-select {
+  padding: 4px 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: inherit;
+  color: #606060;
+  background: white;
+  cursor: pointer;
+  outline: none;
+  margin-left: auto;
+  max-width: 160px;
+}
+
+.yt-summary-chat-model-select:focus {
+  border-color: #667eea;
+}
+
+.yt-summary-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.yt-summary-chat-empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 14px;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}
+
+.yt-summary-chat-bubble {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.yt-summary-chat-bubble.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.yt-summary-chat-bubble.assistant {
+  align-self: flex-start;
+  background: #f0f0f0;
+  color: #0f0f0f;
+  border-bottom-left-radius: 4px;
+}
+
+.yt-summary-chat-bubble.assistant p {
+  margin: 0 0 8px 0;
+}
+
+.yt-summary-chat-bubble.assistant p:last-child {
+  margin-bottom: 0;
+}
+
+.yt-summary-chat-bubble.assistant strong {
+  font-weight: 600;
+}
+
+.yt-summary-chat-bubble.assistant ul,
+.yt-summary-chat-bubble.assistant ol {
+  margin: 6px 0;
+  padding-left: 20px;
+}
+
+.yt-summary-chat-bubble.assistant li {
+  margin: 4px 0;
+}
+
+.yt-summary-chat-bubble.error {
+  align-self: center;
+  background: #fff3f3;
+  color: #d32f2f;
+  font-size: 13px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+/* Typing indicator */
+.yt-summary-chat-typing {
+  align-self: flex-start;
+  display: flex;
+  gap: 4px;
+  padding: 12px 16px;
+  background: #f0f0f0;
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
+}
+
+.yt-summary-chat-typing span {
+  width: 8px;
+  height: 8px;
+  background: #999;
+  border-radius: 50%;
+  animation: yt-summary-typing-bounce 1.4s ease-in-out infinite;
+}
+
+.yt-summary-chat-typing span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.yt-summary-chat-typing span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes yt-summary-typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* Chat input */
+.yt-summary-chat-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 16px 20px;
+  border-top: 1px solid #e0e0e0;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.yt-summary-chat-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: none;
+  outline: none;
+  max-height: 100px;
+  min-height: 40px;
+  line-height: 1.4;
+  transition: border-color 0.2s ease;
+  color: #0f0f0f;
+  background: white;
+}
+
+.yt-summary-chat-input:focus {
+  border-color: #667eea;
+}
+
+.yt-summary-chat-input::placeholder {
+  color: #999;
+}
+
+.yt-summary-chat-send {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.yt-summary-chat-send:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+}
+
+.yt-summary-chat-send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Chat scrollbar */
+.yt-summary-chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.yt-summary-chat-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.yt-summary-chat-messages::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.yt-summary-chat-messages::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
 .yt-summary-error-message {
   color: #606060;
   font-size: 15px;
@@ -311,12 +609,6 @@
   flex-shrink: 0;
 }
 
-.yt-summary-credit {
-  margin: 0;
-  font-size: 12px;
-  color: #999;
-}
-
 /* Error modal specific styles */
 .yt-summary-error-modal .yt-summary-title svg {
   color: #d32f2f;
@@ -356,8 +648,85 @@
     border-top-color: #3a3a3a;
   }
 
-  .yt-summary-credit {
-    color: #777;
+  /* Chat dark theme */
+  .yt-summary-chat-toggle {
+    color: #aaa;
+    border-color: #3a3a3a;
+  }
+
+  .yt-summary-chat-toggle:hover {
+    background: #3a3a3a;
+    border-color: #667eea;
+    color: #667eea;
+  }
+
+  .yt-summary-chat-model-select {
+    background: #2a2a2a;
+    border-color: #3a3a3a;
+    color: #aaa;
+  }
+
+  .yt-summary-chat-model-select:focus {
+    border-color: #667eea;
+  }
+  .yt-summary-panel-left {
+    border-right-color: #3a3a3a;
+  }
+
+  .yt-summary-chat-header {
+    border-bottom-color: #3a3a3a;
+  }
+
+  .yt-summary-chat-header h3 {
+    color: #aaa;
+  }
+
+  .yt-summary-chat-empty {
+    color: #666;
+  }
+
+  .yt-summary-chat-bubble.assistant {
+    background: #2a2a2a;
+    color: #e0e0e0;
+  }
+
+  .yt-summary-chat-bubble.error {
+    background: #3a2020;
+    color: #ff8a8a;
+  }
+
+  .yt-summary-chat-typing {
+    background: #2a2a2a;
+  }
+
+  .yt-summary-chat-typing span {
+    background: #666;
+  }
+
+  .yt-summary-chat-input-row {
+    border-top-color: #3a3a3a;
+  }
+
+  .yt-summary-chat-input {
+    background: #2a2a2a;
+    border-color: #3a3a3a;
+    color: #e0e0e0;
+  }
+
+  .yt-summary-chat-input:focus {
+    border-color: #667eea;
+  }
+
+  .yt-summary-chat-input::placeholder {
+    color: #666;
+  }
+
+  .yt-summary-chat-messages::-webkit-scrollbar-thumb {
+    background: #555;
+  }
+
+  .yt-summary-chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #666;
   }
 }
 
@@ -415,7 +784,24 @@
     justify-content: center;
   }
 
-  .yt-summary-credit {
-    text-align: center;
+  /* Stack panels vertically on mobile */
+  .yt-summary-panels {
+    flex-direction: column;
+  }
+
+  .yt-summary-panel-left {
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+    max-height: 40vh;
+  }
+
+  .yt-summary-panel-right {
+    max-height: 50vh;
+  }
+}
+
+@media (max-width: 768px) and (prefers-color-scheme: dark) {
+  .yt-summary-panel-left {
+    border-bottom-color: #3a3a3a;
   }
 }

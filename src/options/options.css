@@ -56,6 +56,7 @@ label {
 }
 
 input[type="password"],
+textarea,
 .model-select {
   width: 100%;
   padding: 12px;
@@ -67,10 +68,32 @@ input[type="password"],
   background-color: white;
 }
 
+textarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.5;
+}
+
 input[type="password"]:focus,
+textarea:focus,
 .model-select:focus {
   outline: none;
   border-color: #667eea;
+}
+
+.reset-link {
+  background: none;
+  border: none;
+  color: #667eea;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  padding: 0;
+  text-decoration: none;
+}
+
+.reset-link:hover {
+  text-decoration: underline;
 }
 
 .model-select {

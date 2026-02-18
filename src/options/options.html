@@ -37,6 +37,19 @@
         </small>
       </div>
 
+      <div class="form-group">
+        <label for="personalityInput">Chat Personality</label>
+        <textarea
+          id="personalityInput"
+          rows="4"
+          placeholder="Loading default..."
+        ></textarea>
+        <small class="help-text">
+          Controls how the video "speaks" in chat. The video title and transcript are always included automatically.
+          <button type="button" id="resetPersonalityBtn" class="reset-link">Reset to default</button>
+        </small>
+      </div>
+
       <div class="button-group">
         <button id="saveBtn" class="btn btn-primary">Save Settings</button>
         <button id="clearBtn" class="btn btn-secondary">Clear</button>
@@ -63,6 +76,7 @@
     </footer>
   </div>
 
+  <script src="../api/claude-api.js"></script>
   <script src="../utils/storage.js"></script>
   <script src="options.js"></script>
 </body>

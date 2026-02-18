@@ -3,6 +3,8 @@
 document.addEventListener('DOMContentLoaded', async () => {
   const apiKeyInput = document.getElementById('apiKey');
   const modelSelect = document.getElementById('modelSelect');
+  const personalityInput = document.getElementById('personalityInput');
+  const resetPersonalityBtn = document.getElementById('resetPersonalityBtn');
   const saveBtn = document.getElementById('saveBtn');
   const clearBtn = document.getElementById('clearBtn');
   const messageDiv = document.getElementById('message');
@@ -23,6 +25,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
+  // Reset personality to default
+  resetPersonalityBtn.addEventListener('click', () => {
+    personalityInput.value = DEFAULT_CHAT_PERSONALITY;
+  });
+
   /**
    * Load existing settings from storage
    */
@@ -39,6 +46,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       // Fetch available models
       await fetchModels(apiKey, selectedModel);
+
+      // Load personality (show default as placeholder if not customized)
+      const personality = await getPersonality();
+      personalityInput.value = personality || DEFAULT_CHAT_PERSONALITY;
 
     } catch (error) {
       showMessage('Error loading settings', 'error');
@@ -128,6 +139,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       await saveApiKey(apiKey);
       await saveModel(selectedModel);
+
+      // Save personality (empty string or default = clear custom, so null is used at runtime)
+      const personalityText = personalityInput.value.trim();
+      if (personalityText && personalityText !== DEFAULT_CHAT_PERSONALITY) {
+        await savePersonality(personalityText);
+      } else {
+        await savePersonality('');
+      }
+
       showMessage('Settings saved successfully!', 'success');
 
       // Disable save button briefly to show feedback
@@ -154,7 +174,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     try {
       await clearApiKey();
+      await savePersonality('');
       apiKeyInput.value = '';
+      personalityInput.value = DEFAULT_CHAT_PERSONALITY;
       showMessage('Settings cleared', 'success');
 
       // Reset model dropdown
